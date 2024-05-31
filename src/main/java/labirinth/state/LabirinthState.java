@@ -3,8 +3,6 @@ package labirinth.state;
 
 import java.util.*;
 
-import static java.util.List.*;
-
 public class LabirinthState {
     private static final int BOARD_SIZE = 14;
 
@@ -24,6 +22,7 @@ public class LabirinthState {
     private Position startPoint;
     private Position endPoint;
 
+    private Position.Direction lastDirection = Position.Direction.RIGHT;
 
     public LabirinthState() {
         board = new Position[BOARD_SIZE][BOARD_SIZE];
@@ -100,9 +99,48 @@ public class LabirinthState {
         }
     }
 
+    public void movePlayer(Position.Direction direction){
+        Position newPlayerPosition = playerPosition.getNeighbour(direction);
+
+        if(board[newPlayerPosition.getRow()][newPlayerPosition.getCol()].getObject() != WALl){
+            board[playerPosition.getRow()][playerPosition.getCol()].setObject(EMPTY);
+            playerPosition = newPlayerPosition;
+            board[playerPosition.getRow()][playerPosition.getCol()].setObject(PLAYER_POSITION);
+            lastDirection = direction;
+        }
+    }
+    public void moveForward() {
+        movePlayer(lastDirection);
+    }
+
+    public void moveAndTurnRight() {
+        Position.Direction newDirection = null;
+        switch (lastDirection) {
+            case UP:
+                newDirection = Position.Direction.RIGHT;
+                break;
+            case RIGHT:
+                newDirection = Position.Direction.DOWN;
+                break;
+            case DOWN:
+                newDirection = Position.Direction.LEFT;
+                break;
+            case LEFT:
+                newDirection = Position.Direction.UP;
+                break;
+        }
+        movePlayer(newDirection);
+    }
+
+    public boolean isGoal(){
+        return playerPosition == endPoint;
+    }
+
     //test on console
     public static void main(String[] args) {
         LabirinthState labirinthState = new LabirinthState();
+        labirinthState.printBoard();
+
 
         labirinthState.printBoard();
     }
