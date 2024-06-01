@@ -4,31 +4,67 @@ package labirinth.state;
 import java.util.*;
 
 public class LabirinthState {
+    /**
+     * The size of the board including the boarder
+     */
     private static final int BOARD_SIZE = 14;
 
+    /**
+     * The index representing an empty space
+     */
     private static final int EMPTY = 0;
 
+    /**
+     * The index representing the walls
+     */
     private static final int WALl = 1;
 
+    /**
+     * The index representing the end point
+     */
     private static final int END_POINT = 2;
 
+    /**
+     * The index representing the start point
+     */
     private static final int STARTER_POINT = 3;
 
+    /**
+     * The index representing the player's position
+     */
     public static final int PLAYER_POSITION = 4;
 
 
+    /**
+     *  The board represented as a 2D array of Position object
+     */
     private Position[][] board;
+    /**
+     * The current position of the player
+     */
     private Position playerPosition;
+    /**
+     * The starting and ending point of the labyrinth
+     */
     private Position startPoint;
     private Position endPoint;
 
+    /**
+     * The last direction the player moved in
+     */
     private Position.Direction lastDirection = Position.Direction.RIGHT;
 
+    /**
+     * Creates a {@code LabirinthState} and initializes the board
+     */
     public LabirinthState() {
         board = new Position[BOARD_SIZE][BOARD_SIZE];
         initializeBoard();
     }
 
+    /**
+     * Initializes the board with walls, the start and the end point
+     */
     private void initializeBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
@@ -70,6 +106,9 @@ public class LabirinthState {
         }
     }
 
+    /**
+     * Prints the current state of the board to the console
+     */
     public void printBoard() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
@@ -99,6 +138,11 @@ public class LabirinthState {
         }
     }
 
+    /**
+     * Moves the player in the specified direction if the new position in not a wall
+     *
+     * @param direction to move the player
+     */
     public void movePlayer(Position.Direction direction){
         Position newPlayerPosition = playerPosition.getNeighbour(direction);
 
@@ -109,11 +153,18 @@ public class LabirinthState {
             lastDirection = direction;
         }
     }
+
+    /**
+     * Moves the player in the last direction they moved
+     */
     public void moveForward() {
         movePlayer(lastDirection);
     }
 
-    public void moveAndTurnRight() {
+    /**
+     * Turn the player to the right and moves them
+     */
+    public void turnAndMoveRight() {
         Position.Direction newDirection = null;
         switch (lastDirection) {
             case UP:
@@ -132,11 +183,20 @@ public class LabirinthState {
         movePlayer(newDirection);
     }
 
+    /**
+     * Checks if the player has reached the end point.
+     *
+     * @return true if the player has reached the end point, false otherwise
+     */
     public boolean isGoal(){
         return playerPosition == endPoint;
     }
 
-    //test on console
+    /**
+     * The main method to test the LabirinthState class on the console
+     *
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         LabirinthState labirinthState = new LabirinthState();
         labirinthState.printBoard();

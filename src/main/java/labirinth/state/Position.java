@@ -1,6 +1,8 @@
 package labirinth.state;
 
-
+/**
+ * Represetns a 2D position and the object on that position
+ */
 public class Position {
     private int row;
     private int col;
@@ -29,12 +31,19 @@ public class Position {
         this.object = object;
     }
 
+    /**
+     * Represents the four main directions
+     */
     public enum Direction {
 
         UP, DOWN, LEFT, RIGHT;
     }
 
-
+    /**
+     * @return the position from the given direction
+     *
+     * @param direction specifies the direction from the standing point
+     */
     public Position getNeighbour(Direction direction) {
         switch (direction) {
             case UP:
