@@ -7,27 +7,27 @@ public class LabirinthState {
     /**
      * The size of the board including the boarder
      */
-    private static final int BOARD_SIZE = 14;
+    public static final int BOARD_SIZE = 14;
 
     /**
      * The index representing an empty space
      */
-    private static final int EMPTY = 0;
+    public static final int EMPTY = 0;
 
     /**
      * The index representing the walls
      */
-    private static final int WALl = 1;
+    public static final int WALl = 1;
 
     /**
      * The index representing the end point
      */
-    private static final int END_POINT = 2;
+    public static final int END_POINT = 2;
 
     /**
      * The index representing the start point
      */
-    private static final int STARTER_POINT = 3;
+    public static final int STARTER_POINT = 3;
 
     /**
      * The index representing the player's position
@@ -91,8 +91,8 @@ public class LabirinthState {
                 new Position(2, 5, WALl), new Position(2, 7, WALl), new Position(2, 9, WALl),
                 new Position(3, 3, WALl), new Position(3, 9, WALl),
                 new Position(4, 4, WALl), new Position(4, 10, WALl),
-                new Position(5, 1, WALl), new Position(5, 6, WALl), new Position(5, 6, WALl),
-                new Position(6, 6, WALl), new Position(6, 9, WALl), new Position(1, 1, WALl),
+                new Position(5, 1, WALl), new Position(5, 6, WALl), new Position(5, 7, WALl),
+                new Position(6, 6, WALl), new Position(6, 9, WALl), new Position(6, 11, WALl),
                 new Position(7, 3, WALl),
                 new Position(8, 2, WALl), new Position(8, 5, WALl), new Position(8, 8, WALl), new Position(8, 12, WALl),
                 new Position(9, 7, WALl),
@@ -136,6 +136,11 @@ public class LabirinthState {
             }
             System.out.println();
         }
+    }
+
+    public Position[][]  getLabirinthsState()
+    {
+        return board;
     }
 
     /**
