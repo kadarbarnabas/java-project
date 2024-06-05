@@ -201,6 +201,11 @@ public class LabirinthState {
         LabirinthState labirinthState = new LabirinthState();
         labirinthState.printBoard();
 
+        /*
+        labirinthState.moveForward();
+        labirinthState.turnAndMoveRight();
+        labirinthState.moveForward();
+        */
 
         labirinthState.printBoard();
     }
