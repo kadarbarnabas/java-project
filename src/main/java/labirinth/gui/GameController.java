@@ -1,5 +1,6 @@
 package labirinth.gui;
 
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -25,6 +26,8 @@ public class GameController {
 
     private int moveCount = 0;
 
+    private boolean gameOver = false;
+
     @FXML
     private GridPane board;
 
@@ -49,13 +52,13 @@ public class GameController {
                 Pane cellPane = new Pane();
                 switch (grid[i][j].getObject()) {
                     case LabirinthState.WALl:
-                        cellPane.setStyle("-fx-background-color: black;");
+                        cellPane.setStyle("-fx-background-color: black");
                         break;
                     case LabirinthState.STARTER_POINT:
-                        cellPane.setStyle("-fx-background-color: red;");
+                        cellPane.setStyle("-fx-background-color: red");
                         break;
                     case LabirinthState.END_POINT:
-                        cellPane.setStyle("-fx-background-color: red;");
+                        cellPane.setStyle("-fx-background-color: red");
                         break;
                     case LabirinthState.EMPTY:
                         cellPane.setStyle(null);
@@ -89,14 +92,17 @@ public class GameController {
 
         board.add(cellPane, playerPosition.getCol(), playerPosition.getRow());
 
-        heighlightLegalMoves();
         gameOver();
+        if (!state.isGoal()){
+            heighlightLegalMoves();
+        }
+
     }
 
     @FXML
     private void mouseClickMove(MouseEvent event){
 
-        Pane clickedPane = (Pane) event.getTarget();
+        var clickedPane = (Node) event.getTarget();
         var row = GridPane.getRowIndex(clickedPane);
         var col = GridPane.getColumnIndex(clickedPane);
 
@@ -176,7 +182,7 @@ public class GameController {
         for (Position.Direction direction : legalMoves) {
             Position legalPositions = state.getPlayerPosition().getNeighbour(direction);
             Pane cellPane = new Pane();
-            cellPane.setStyle("-fx-background-color: lightgreen;");
+            cellPane.setStyle("-fx-background-color: lightgreen");
 
             board.add(cellPane, legalPositions.getCol(), legalPositions.getRow());
             highlightedMoves.add(cellPane);
@@ -184,12 +190,14 @@ public class GameController {
     }
 
     private void gameOver(){
-        if (state.getLegalMoves().isEmpty() || state.isGoal()){
-            Logger.info("GAME OVER");
-            moveCounter.setText("You lost!");
-        }else if (state.isGoal()){
+        if (state.isGoal()){
+            gameOver = true;
             Logger.info("GAME OVER");
             moveCounter.setText("You Won!");
+        }else if (state.getLegalMoves().isEmpty()){
+            gameOver = true;
+            Logger.info("GAME OVER");
+            moveCounter.setText("You lost!");
         }
     }
 

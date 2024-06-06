@@ -195,6 +195,10 @@ public class LabirinthState {
         for (Position.Direction direction : validDirections) {
             Position newPlayerPosition = playerPosition.getNeighbour(direction);
 
+            if (newPlayerPosition.getRow() == 14 || newPlayerPosition.getCol() == 14) {
+                return legalMoves;
+            }
+
             if(board[newPlayerPosition.getRow()][newPlayerPosition.getCol()].getObject() != WALl){
                 legalMoves.add(direction);
             }
