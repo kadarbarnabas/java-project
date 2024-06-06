@@ -14,6 +14,8 @@ import javafx.scene.layout.GridPane;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.tinylog.Logger;
+
 public class GameController {
 
     private LabirinthState state;
@@ -32,12 +34,14 @@ public class GameController {
     @FXML
     private void initialize()
     {
+        Logger.info("Initializing Game");
         state = new LabirinthState();
         loadTable();
     }
 
     private void loadTable()
     {
+        Logger.info("Loading Table");
         Position[][] grid = state.getLabirinthState();
 
         for (int i = 0; i < LabirinthState.BOARD_SIZE; i++) {
@@ -106,6 +110,8 @@ public class GameController {
             moveCount++;
             setMoveCounter();
             state.movePlayer(direction);
+        }else {
+            Logger.info("Player invalid moving");
         }
 
         updatePlayerPosition();
@@ -117,34 +123,41 @@ public class GameController {
         int playerRow = playerPosition.getRow();
         int playerCol = playerPosition.getCol();
 
-        System.out.println(playerRow + " " + playerCol + "--->" + row + " " + col);
+
 
         int rowDistance = playerRow - row;
         int colDistance = playerCol - col;
 
         if (-1 > rowDistance || rowDistance > 1) {
-            System.out.println("Invalid distance");
+            Logger.info(playerRow + " " + playerCol + " ---> " + row + " " + col);
+            Logger.info("Invalid distance");
             return null;
         }
         if (-1 > colDistance || colDistance > 1) {
-            System.out.println("Invalid distance");
+            Logger.info(playerRow + " " + playerCol + " ---> " + row + " " + col);
+            Logger.info("Invalid distance");
             return null;
         }
         if (colDistance ==0 && rowDistance ==0) {
-            System.out.println("Invalid distance");
+            Logger.info(playerRow + " " + playerCol + " ---> " + row + " " + col);
+            Logger.info("Invalid distance");
             return null;
         }
 
         if (playerCol < col){
+            Logger.info("Player moved from: " + playerRow + " " + playerCol + " to Right " + row + " " + col);
             return Position.Direction.RIGHT;
         }
         else if (playerCol > col){
+            Logger.info("Player moved from: " + playerRow + " " + playerCol + " to Left " + row + " " + col);
             return Position.Direction.LEFT;
         }
         else if (playerRow < row){
+            Logger.info("Player moved from: " + playerRow + " " + playerCol + " to Down " + row + " " + col);
             return Position.Direction.DOWN;
         }
         else if (playerRow > row){
+            Logger.info("Player moved from: " + playerRow + " " + playerCol + " to Up " + row + " " + col);
             return Position.Direction.UP;
         }
 
@@ -171,10 +184,11 @@ public class GameController {
     }
 
     private void gameOver(){
-        System.out.println("Game Over");
         if (state.getLegalMoves().isEmpty() || state.isGoal()){
+            Logger.info("GAME OVER");
             moveCounter.setText("You lost!");
         }else if (state.isGoal()){
+            Logger.info("GAME OVER");
             moveCounter.setText("You Won!");
         }
     }
@@ -185,6 +199,7 @@ public class GameController {
 
     @FXML
     private void resetGame(){
+        Logger.info("Resetting game");
         state = new LabirinthState();
         moveCount = 0;
         setMoveCounter();

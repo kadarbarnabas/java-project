@@ -21,6 +21,7 @@
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <javafx.version>22.0.1</javafx.version>
+        <tinylog.version>2.4.1</tinylog.version>
         <javafx.platform>win</javafx.platform>
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <jacoco.version>0.8.12</jacoco.version>
@@ -29,6 +30,18 @@
         <exec.mainClass>labirinth.gui.Main</exec.mainClass>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-api</artifactId>
+            <version>${tinylog.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-impl</artifactId>
+            <version>${tinylog.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>hu.unideb.inf</groupId>
             <artifactId>homework-project-utils</artifactId>

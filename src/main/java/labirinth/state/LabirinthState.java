@@ -112,38 +112,6 @@ public class LabirinthState {
     }
 
     /**
-     * Prints the current state of the board to the console
-     */
-    public void printBoard() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                switch (board[i][j].getObject()) {
-                    case WALl:
-                        System.out.print("#");
-                        break;
-                    case STARTER_POINT:
-                        System.out.print("S");
-                        break;
-                    case END_POINT:
-                        System.out.print("E");
-                        break;
-                    case PLAYER_POSITION:
-                        System.out.print("P");
-                        break;
-                    case EMPTY:
-                        System.out.print(" ");
-                        break;
-                    default:
-                        System.out.print("?");
-                        break;
-                }
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
-
-    /**
      * Returns the current state of the labyrinth as a 2D array of Positions
      *
      * @return a 2D array representing the current state of the labyrinth
@@ -241,17 +209,6 @@ public class LabirinthState {
      */
     public boolean isGoal(){
         return board[playerPosition.getRow()][playerPosition.getCol()].getObject() == END_POINT;
-    }
-
-    /**
-     * The main method to test the LabirinthState class on the console
-     *
-     * @param args Command line arguments
-     */
-
-    public static void main(String[] args) {
-        LabirinthState labirinthState = new LabirinthState();
-        labirinthState.printBoard();
     }
 
 }
