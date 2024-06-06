@@ -49,7 +49,10 @@ public class LabirinthState {
     /**
      * The starting and ending point of the labyrinth
      */
+    @Getter
     private Position startPoint;
+
+    @Getter
     private Position endPoint;
 
     /**
@@ -237,7 +240,7 @@ public class LabirinthState {
      * @return true if the player has reached the end point, false otherwise
      */
     public boolean isGoal(){
-        return playerPosition == endPoint;
+        return board[playerPosition.getRow()][playerPosition.getCol()].getObject() == END_POINT;
     }
 
     /**

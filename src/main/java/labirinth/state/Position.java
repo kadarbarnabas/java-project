@@ -43,6 +43,11 @@ public class Position {
      * @param direction specifies the direction from the standing point
      */
     public Position getNeighbour(Direction direction) {
+
+        if (direction == null) {
+            return new Position(row, col, object);
+        }
+
         switch (direction) {
             case UP:
                 return new Position(row - 1, col, object);
