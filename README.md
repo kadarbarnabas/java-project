@@ -1,5 +1,21 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/XbZw8B6J)
-# TODO: a title for your project
+# Labirintus Golyó Navigátor
 
-TODO: a detailed description of your project (must contain at least the original description of the assignment)
+![Labirintus](src/main/resources/Images/labirinth2.png)
 
+A feladat az hogy egy golyót kell elnavigálni a bal oldali piros mezőről a jobb oldali piros mezőre úgy, hogy csak előre vagy jobbra fordulva lehet lépni, és a fekete falakon nem lehet átmenni.
+
+## Kezdeti állapot
+
+A golyó a bal oldali piros mezőn kezdődik, a cél pedig a jobb oldali piros mező.
+
+![Labirintus](src/main/resources/Images/labirinth.png)
+
+## Szabályok
+
+- A golyó csak előre vagy jobbra fordulva léphet egy mezőt.
+- A feketével jelölt falakat nem lehet átmenni.
+- A cél a jobb oldali piros mező elérése.
+
+## A megoldás lépései
+
+TODO!
