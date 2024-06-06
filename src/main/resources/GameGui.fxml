@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labirinth.gui.GameController">
+<HBox alignment="CENTER" prefHeight="100.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labirinth.gui.GameController">
    <children>
-      <GridPane fx:id="board" alignment="CENTER" gridLinesVisible="true" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0">
+      <GridPane fx:id="board" alignment="CENTER" gridLinesVisible="true" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" onMouseClicked="#mouseClickMove">
          <columnConstraints>
             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
@@ -42,5 +46,19 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
+         <children>
+            <Text fx:id="moveCounter" strokeType="OUTSIDE" strokeWidth="0.0" text="Moves : 0" textAlignment="CENTER" wrappingWidth="350.13671875">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Text>
+            <Button fx:id="resetGame" mnemonicParsing="false" onMouseClicked="#resetGame" prefHeight="65.0" prefWidth="175.0" text="Reset Game" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
-</VBox>
+</HBox>

@@ -1,35 +1,33 @@
 package labirinth.state;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Represetns a 2D position and the object on that position
+ * Hold the row, column of the grid position and object on
+ * that grid position
  */
+@Getter
 public class Position {
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
+
+    @Setter
     private int object;
 
+    /**
+     *
+     * @param row position in the grid
+     * @param col the column position in the grid
+     * @param object identifier at the specifid position
+     */
     public Position(int row, int col, int object) {
         this.row = row;
         this.col = col;
         this.object = object;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    public int getObject() {
-        return object;
-    }
-
-
-    public void setObject(int object) {
-        this.object = object;
-    }
 
     /**
      * Represents the four main directions

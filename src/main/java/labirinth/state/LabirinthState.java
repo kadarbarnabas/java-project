@@ -1,6 +1,8 @@
 package labirinth.state;
 
 
+import lombok.Getter;
+
 import java.util.*;
 
 public class LabirinthState {
@@ -42,6 +44,7 @@ public class LabirinthState {
     /**
      * The current position of the player
      */
+    @Getter
     private Position playerPosition;
     /**
      * The starting and ending point of the labyrinth
@@ -81,7 +84,6 @@ public class LabirinthState {
         board[startPoint.getRow()][startPoint.getCol()] = startPoint;
 
         playerPosition = new Position(3, 0, PLAYER_POSITION);
-        board[playerPosition.getRow()][playerPosition.getCol()] = playerPosition;
 
         endPoint = new Position(10, BOARD_SIZE - 1, END_POINT);
         board[endPoint.getRow()][endPoint.getCol()] = endPoint;
@@ -138,7 +140,12 @@ public class LabirinthState {
         }
     }
 
-    public Position[][]  getLabirinthsState()
+    /**
+     * Returns the current state of the labyrinth as a 2D array of Positions
+     *
+     * @return a 2D array representing the current state of the labyrinth
+     */
+    public Position[][]  getLabirinthState()
     {
         return board;
     }
@@ -189,6 +196,42 @@ public class LabirinthState {
     }
 
     /**
+     * Returns a list of legal directions that the player can move based on the Position
+     * The player can continue in the last direction or turn right from the last direction
+     *
+     * @return every legal direction that can be made
+     */
+    public List<Position.Direction> getLegalMoves() {
+        List<Position.Direction> legalMoves = new ArrayList<>();
+        List<Position.Direction> validDirections = new ArrayList<>();
+
+        validDirections.add(lastDirection);
+        switch (lastDirection) {
+            case UP:
+                validDirections.add(Position.Direction.RIGHT);
+                break;
+            case RIGHT:
+                validDirections.add(Position.Direction.DOWN);
+                break;
+            case DOWN:
+                validDirections.add(Position.Direction.LEFT);
+                break;
+            case LEFT:
+                validDirections.add(Position.Direction.UP);
+                break;
+        }
+
+        for (Position.Direction direction : validDirections) {
+            Position newPlayerPosition = playerPosition.getNeighbour(direction);
+
+            if(board[newPlayerPosition.getRow()][newPlayerPosition.getCol()].getObject() != WALl){
+                legalMoves.add(direction);
+            }
+        }
+        return legalMoves;
+    }
+
+    /**
      * Checks if the player has reached the end point.
      *
      * @return true if the player has reached the end point, false otherwise
@@ -202,16 +245,9 @@ public class LabirinthState {
      *
      * @param args Command line arguments
      */
+
     public static void main(String[] args) {
         LabirinthState labirinthState = new LabirinthState();
-        labirinthState.printBoard();
-
-        /*
-        labirinthState.moveForward();
-        labirinthState.turnAndMoveRight();
-        labirinthState.moveForward();
-        */
-
         labirinthState.printBoard();
     }
 
