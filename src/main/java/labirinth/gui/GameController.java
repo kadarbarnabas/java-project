@@ -177,7 +177,7 @@ public class GameController {
         }
         highlightedMoves.clear();
 
-        List<Position.Direction> legalMoves = state.getLegalMoves();
+        List<Position.Direction> legalMoves = state.getLegalMovesList();
 
         for (Position.Direction direction : legalMoves) {
             Position legalPositions = state.getPlayerPosition().getNeighbour(direction);

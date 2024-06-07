@@ -9,7 +9,7 @@ import lombok.Setter;
  * that grid position
  */
 @Getter
-public class Position {
+public class Position implements Cloneable {
     private final int row;
     private final int col;
 
@@ -61,5 +61,4 @@ public class Position {
                 return new Position(row, col, object);
         }
     }
-
 }

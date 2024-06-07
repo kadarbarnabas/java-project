@@ -78,7 +78,7 @@ public class LabirinthStateTest {
 
     @Test
     void testGetLegalMoves(){
-        List<Position.Direction> legalMoves = labirinthState.getLegalMoves();
+        List<Position.Direction> legalMoves = labirinthState.getLegalMovesList();
         assertTrue(legalMoves.contains(Position.Direction.RIGHT));
         assertFalse(legalMoves.contains(Position.Direction.UP));
     }

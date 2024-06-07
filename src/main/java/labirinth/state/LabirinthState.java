@@ -1,11 +1,13 @@
 package labirinth.state;
 
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import lombok.Getter;
+import puzzle.State;
 
 import java.util.*;
 
-public class LabirinthState {
+public class LabirinthState implements State<Position.Direction> {
     /**
      * The size of the board including the boarder
      */
@@ -129,7 +131,7 @@ public class LabirinthState {
     public void movePlayer(Position.Direction direction){
         Position newPlayerPosition = playerPosition.getNeighbour(direction);
 
-        if(board[newPlayerPosition.getRow()][newPlayerPosition.getCol()].getObject() != WALl){
+        if(getLegalMovesList().contains(direction)){
             board[playerPosition.getRow()][playerPosition.getCol()].setObject(EMPTY);
             playerPosition = newPlayerPosition;
             board[playerPosition.getRow()][playerPosition.getCol()].setObject(PLAYER_POSITION);
@@ -172,7 +174,7 @@ public class LabirinthState {
      *
      * @return every legal direction that can be made
      */
-    public List<Position.Direction> getLegalMoves() {
+    public List<Position.Direction> getLegalMovesList() {
         List<Position.Direction> legalMoves = new ArrayList<>();
         List<Position.Direction> validDirections = new ArrayList<>();
 
@@ -195,11 +197,10 @@ public class LabirinthState {
         for (Position.Direction direction : validDirections) {
             Position newPlayerPosition = playerPosition.getNeighbour(direction);
 
-            if (newPlayerPosition.getRow() == 14 || newPlayerPosition.getCol() == 14) {
-                return legalMoves;
-            }
+            if(newPlayerPosition.getRow() != 14 && newPlayerPosition.getCol() != 14
+                    && newPlayerPosition.getRow() != -1 && newPlayerPosition.getCol() != -1
+                    && board[newPlayerPosition.getRow()][newPlayerPosition.getCol()].getObject() != WALl){
 
-            if(board[newPlayerPosition.getRow()][newPlayerPosition.getCol()].getObject() != WALl){
                 legalMoves.add(direction);
             }
         }
@@ -212,9 +213,113 @@ public class LabirinthState {
      * @return true if the player has reached the end point, false otherwise
      */
     public boolean isGoal(){
-        return board[playerPosition.getRow()][playerPosition.getCol()].getObject() == END_POINT;
+        return playerPosition.getRow() == 10 && playerPosition.getCol() == 13;
     }
 
+    /**
+     * Checks if the labyrinth puzzel is solved by the solver
+     *
+     * @return true if it reached the end point, false otherwise
+     */
+    @Override
+    public boolean isSolved(){
+        return isGoal();
+    }
+
+    /**
+     * Checks if the solver moves in the specified direction is it legal
+     *
+     * @param direction in which the solver moves
+     * @return true if move is legal, false otherwise
+     */
+    @Override
+    public boolean isLegalMove(Position.Direction direction) {
+        return getLegalMovesList().contains(direction);
+    }
+
+    /**
+     * Makes a move in the specified direction if its legal
+     *
+     * @param direction in which the solver moves
+     */
+    @Override
+    public void makeMove(Position.Direction direction) {
+        if(isLegalMove(direction)){
+
+            movePlayer(direction);
+        }
+    }
+
+    /**
+     * Gets a set of legal moves that the solver can make in the current state
+     *
+     * @return a set of legal move directions
+     */
+    @Override
+    public Set<Position.Direction> getLegalMoves(){
+        return new HashSet<>(getLegalMovesList());
+    }
+
+    /**
+     * Comapres the labyrinth state to another object equality
+     *
+     * @param o the objecz to compare to
+     * @return true if the object are equal, false otherwise
+     *
+     * Two labyrinth is true if their boards and player positions... and last directions are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LabirinthState that = (LabirinthState) o;
+        return Arrays.deepEquals(board, that.board) &&
+                Objects.equals(playerPosition, that.playerPosition) &&
+                Objects.equals(startPoint, that.startPoint) &&
+                Objects.equals(endPoint, that.endPoint) &&
+                lastDirection == that.lastDirection;
+    }
+
+    /**
+     * Generates a hash code value
+     *
+     * @return the hash code value
+     */
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(playerPosition, startPoint, endPoint, lastDirection);
+        result = 31 * result + Arrays.deepHashCode(board);
+        return result;
+    }
+
+
+    /**
+     * Creates a deep copy of the labyrinth state
+     *
+     * @return a new labyrinth state object copy
+     */
+    @Override
+    public LabirinthState clone() {
+        LabirinthState copy;
+        try{
+            copy = (LabirinthState) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+
+        copy.board = new Position[BOARD_SIZE][BOARD_SIZE];
+        copy.startPoint = new Position(startPoint.getRow(), startPoint.getCol(), STARTER_POINT);
+        copy.endPoint = new Position(endPoint.getRow(), endPoint.getCol(), END_POINT);
+        copy.playerPosition = new Position(playerPosition.getRow(), playerPosition.getCol(), PLAYER_POSITION);
+        copy.lastDirection = lastDirection;
+
+        for(int i = 0; i<BOARD_SIZE; i++){
+            for(int j = 0; j<BOARD_SIZE; j++){
+                copy.board[i][j] = new Position(i, j, board[i][j].getObject());
+            }
+        }
+        return copy;
+    }
 }
 
 
