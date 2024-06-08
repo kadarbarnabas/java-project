@@ -1,12 +1,13 @@
 package labirinth.state;
 
-
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import lombok.Getter;
 import puzzle.State;
 
 import java.util.*;
 
+/**
+ * Represents the state of the labirinth wich implements the puzzle.State interface
+ */
 public class LabirinthState implements State<Position.Direction> {
     /**
      * The size of the board including the boarder
@@ -169,6 +170,20 @@ public class LabirinthState implements State<Position.Direction> {
     }
 
     /**
+     * Sets the player's position to a new specified location and direction
+     * on the board and update the state with these new position and direction
+     *
+     * @param newPlayerPosition specified new positions for the player
+     * @param newDirection specified last directions for the player
+     */
+    public void setPlayerPositionToSpecifiedPosition(Position newPlayerPosition, Position.Direction newDirection) {
+        board[playerPosition.getRow()][playerPosition.getCol()].setObject(EMPTY);
+        playerPosition = newPlayerPosition;
+        board[playerPosition.getRow()][playerPosition.getCol()].setObject(PLAYER_POSITION);
+        lastDirection = newDirection;
+    }
+
+    /**
      * Returns a list of legal directions that the player can move based on the Position
      * The player can continue in the last direction or turn right from the last direction
      *
@@ -263,7 +278,7 @@ public class LabirinthState implements State<Position.Direction> {
     /**
      * Comapres the labyrinth state to another object equality
      *
-     * @param o the objecz to compare to
+     * @param o the object to compare to
      * @return true if the object are equal, false otherwise
      *
      * Two labyrinth is true if their boards and player positions... and last directions are equal
